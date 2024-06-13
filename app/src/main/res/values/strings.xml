@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyNoteApplication</string>
+    <string name="add_note">Add Note</string>
+    <string name="note_activity_title">Note Activity</string>
+
+</resources>
