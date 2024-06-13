@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mynoteapplication">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyNoteApplication"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="langid"/>
 
         <activity
             android:name=".MainActivity"
@@ -30,4 +36,3 @@
     </application>
 
 </manifest>
-
