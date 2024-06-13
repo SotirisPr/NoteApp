@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -57,15 +56,15 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) { // Check if data is not null
+        if (resultCode == RESULT_OK && data!= null) { // Check if data is not null
             String content = data.getStringExtra("note_content");
+            int position = data.getIntExtra("note_position", -1);
             if (requestCode == REQUEST_CODE_NEW_NOTE) {
                 // Add new note to the list
                 noteList.add(new Note(content));
             } else if (requestCode == REQUEST_CODE_EDIT_NOTE) {
                 // Update existing note in the list
-                int position = data.getIntExtra("note_position", -1);
-                if (position != -1) {
+                if (position!= -1) {
                     noteList.get(position).setContent(content);
                 }
             }
@@ -75,19 +74,16 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
     }
 
     private void saveNotes() {
-
         NotesStorage.saveNotes(this, noteList);
     }
 
     private void loadNotes() {
         // Check if the loaded notes are null
         List<Note> loadedNotes = NotesStorage.loadNotes(this);
-        if (loadedNotes != null) {
+        if (loadedNotes!= null) {
             noteList.clear();
             noteList.addAll(loadedNotes);
             noteAdapter.notifyDataSetChanged();
         }
     }
-
 }
-

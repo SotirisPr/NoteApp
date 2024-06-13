@@ -10,6 +10,7 @@ public class NoteActivity extends AppCompatActivity {
 
     private EditText editTextNote;
     private Button buttonSave;
+    private int notePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,14 @@ public class NoteActivity extends AppCompatActivity {
         editTextNote = findViewById(R.id.editTextNote);
         buttonSave = findViewById(R.id.buttonSave);
 
+        // Get the existing note content and position from the intent
+        String existingNoteContent = getIntent().getStringExtra("note_content");
+        notePosition = getIntent().getIntExtra("note_position", -1);
+
+        if (existingNoteContent!= null) {
+            editTextNote.setText(existingNoteContent);
+        }
+
         buttonSave.setOnClickListener(v -> saveNote());
     }
 
@@ -26,8 +35,8 @@ public class NoteActivity extends AppCompatActivity {
         String noteContent = editTextNote.getText().toString();
         Intent intent = new Intent();
         intent.putExtra("note_content", noteContent);
+        intent.putExtra("note_position", notePosition); // Pass the note position
         setResult(RESULT_OK, intent);
         finish();
     }
 }
-
