@@ -7,6 +7,7 @@ import android.os.LocaleList;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,13 +60,12 @@ public class NoteActivity extends AppCompatActivity {
                             public void onSuccess(@Nullable String languageCode) {
                                 if (languageCode.equals("und")) {
                                     Log.i(TAG, "Can't identify language.");
+                                    Toast.makeText( NoteActivity.this, "Can't identify language.", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.i(TAG, "Language: " + languageCode);
-                                }
-                                editTextNote.setImeHintLocales(new LocaleList(new Locale(languageCode)));
-
-                            }
-                        })
+                                    editTextNote.setImeHintLocales(new LocaleList(new Locale(languageCode)));
+                                }}
+                            })
                 .addOnFailureListener(
                         new OnFailureListener() {
                             @Override
@@ -76,10 +76,4 @@ public class NoteActivity extends AppCompatActivity {
                         });
 
     }
-
-//    private void setKeyboardLanguage(String languageTag) {
-//                                editTextNote.setImeHintLocales(new LocaleList(new Locale(languageCode)));
-
-//
-//    }
 }
