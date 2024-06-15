@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNoteClickListener {
+public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNoteClickListener, NoteAdapter.OnNoteDeleteClickListener {
 
     private static final int REQUEST_CODE_NEW_NOTE = 1;
     private static final int REQUEST_CODE_EDIT_NOTE = 2;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         noteList = new ArrayList<>();
-        noteAdapter = new NoteAdapter(noteList, this);
+        noteAdapter = new NoteAdapter(noteList, this, this); // Pass this as OnNoteDeleteClickListener
         recyclerView.setAdapter(noteAdapter);
 
         loadNotes();
@@ -51,6 +51,17 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.OnNot
         intent.putExtra("note_content", note.getContent());
         intent.putExtra("note_position", noteList.indexOf(note)); // Pass note position
         startActivityForResult(intent, REQUEST_CODE_EDIT_NOTE);
+    }
+
+    @Override
+    public void onNoteDeleteClick(Note note) {
+        // Remove the note from the list
+        int position = noteList.indexOf(note);
+        if (position!= -1) {
+            noteList.remove(position);
+            noteAdapter.notifyItemRemoved(position);
+        }
+        saveNotes();
     }
 
     @Override

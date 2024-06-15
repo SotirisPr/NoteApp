@@ -15,14 +15,20 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     private List<Note> noteList;
     private OnNoteClickListener onNoteClickListener;
+    private OnNoteDeleteClickListener onNoteDeleteClickListener;
 
     public interface OnNoteClickListener {
         void onNoteClick(Note note);
     }
 
-    public NoteAdapter(List<Note> noteList, OnNoteClickListener onNoteClickListener) {
+    public interface OnNoteDeleteClickListener {
+        void onNoteDeleteClick(Note note);
+    }
+
+    public NoteAdapter(List<Note> noteList, OnNoteClickListener onNoteClickListener, OnNoteDeleteClickListener onNoteDeleteClickListener) {
         this.noteList = noteList;
         this.onNoteClickListener = onNoteClickListener;
+        this.onNoteDeleteClickListener = onNoteDeleteClickListener;
     }
 
     @NonNull
@@ -37,6 +43,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         Note note = noteList.get(position);
         holder.textViewNote.setText(note.getContent());
         holder.buttonEdit.setOnClickListener(v -> onNoteClickListener.onNoteClick(note));
+        holder.buttonDelete.setOnClickListener(v -> onNoteDeleteClickListener.onNoteDeleteClick(note));
     }
 
     @Override
@@ -47,12 +54,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     static class NoteViewHolder extends RecyclerView.ViewHolder {
         TextView textViewNote;
         Button buttonEdit;
+        Button buttonDelete;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewNote = itemView.findViewById(R.id.textViewNote);
             buttonEdit = itemView.findViewById(R.id.buttonEdit);
+            buttonDelete = itemView.findViewById(R.id.buttonDelete);
         }
     }
 }
-
